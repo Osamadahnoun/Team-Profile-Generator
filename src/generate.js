@@ -1,4 +1,4 @@
-const managerCard = function(manager) {
+const managerInfo = function(manager) {
     return `
     <div class="card column is-one-third">
   <div class="card-content">
@@ -19,7 +19,7 @@ const managerCard = function(manager) {
     `
 };
 
-const EngineerCard = function(engineer) {
+const engineerInfo = function(engineer) {
     return `
     <div class="card column is-one-third">
   <div class="card-content">
@@ -40,7 +40,7 @@ const EngineerCard = function(engineer) {
     `
 };
 
-const InternCard = function(intern) {
+const internInfo = function(intern) {
     return `
     <div class="card column is-one-third">
   <div class="card-content">
@@ -60,6 +60,34 @@ const InternCard = function(intern) {
 </div>
     `
 };
+
+const cardArrayCreator = function(data) {
+    cardArray = [];
+
+    for (let i=0; i < data.length; i++) {
+        const employee = data[i];
+        const role = employee.getRole();
+
+        if (role == 'Manager') {
+            const managerCard = managerInfo(employee);
+            cardArray.push(managerCard);
+        }
+
+        if (role == 'Engineer') {
+            const EngineerCard = engineerInfo(employee);
+            cardArray.push(EngineerCard);
+        }
+
+        if (role == 'Intern') {
+            const internCard = internInfo(employee);
+            cardArray.push(internCard);
+        }
+
+
+
+
+    }
+}
 
 // module.exports = {
 //     managerCard,
