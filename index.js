@@ -1,6 +1,12 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 
+const employees = [];
+
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern'); 
+
 const askManager = data => {
     console.log('Please build your team');
 
@@ -36,15 +42,21 @@ const askManager = data => {
         },
        
     ])
-    .then(data => {
-        if (data.teamMember == 'Engineer') {
+    .then(managerData => {
+        const { managerName, managerId, managerEmail, managerOffice } = managerData;
+        const manager = new Manager (managerName, managerId, managerEmail, managerOffice);
+
+        employees.push(manager);
+        console.log(employees);
+
+        if (managerData.teamMember == 'Engineer') {
             return askEngineer(data);
         }
-        else if (data.teamMember == 'Intern') {
+        else if (managerData.teamMember == 'Intern') {
             return askIntern(data);
         } 
         else {
-            return data
+            return managerData
         }
     }) 
 };
@@ -81,15 +93,21 @@ const askManager = data => {
                 // // when: ({internSchool}) => internSchool,
             },
         ])
-        .then(data => {
-            if (data.teamMember == 'Engineer') {
+        .then(engineerData => {
+        const { EngineerName, EngineerId, EngineerEmail, EngineerGitHub } = engineerData;
+        const engineer = new Engineer (EngineerName, EngineerId, EngineerEmail, EngineerGitHub);
+
+        employees.push(engineer);
+        console.log(employees);
+
+            if (engineerData.teamMember == 'Engineer') {
                 return askEngineer(data);
             }
-            else if (data.teamMember == 'Intern') {
+            else if (engineerData.teamMember == 'Intern') {
                 return askIntern(data);
             } 
             else {
-                return data
+                return engineerData
             }
         })  
     };
@@ -126,20 +144,26 @@ const askManager = data => {
                 // // when: ({internSchool}) => internSchool,
             },
         ])
-        .then(data => {
-            if (data.teamMember == 'Engineer') {
+        .then(internData => {
+            const { internName, internId, internEmail, internSchool} = internData;
+            const intern = new Intern (internName, internId, internEmail, internSchool);
+
+            employees.push(intern);
+            console.log(employees);
+
+            if (internData.teamMember == 'Engineer') {
                 return askEngineer(data);
             }
-            else if (data.teamMember == 'Intern') {
+            else if (internData.teamMember == 'Intern') {
                 return askIntern(data);
             } 
             else {
-                return data
+                return internData
             }
         })  
     }
     
 
 askManager().then(answers => {
-    console.log(answers)
+    // console.log(answers)
 });
