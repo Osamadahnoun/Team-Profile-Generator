@@ -1,11 +1,13 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
+const generate = require('./src/generate.js')
 
-const employees = [];
+const employeesArray = [];
 
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern'); 
+const console = require('console');
 
 const askManager = data => {
     console.log('Please build your team');
@@ -46,8 +48,8 @@ const askManager = data => {
         const { managerName, managerId, managerEmail, managerOffice } = managerData;
         const manager = new Manager (managerName, managerId, managerEmail, managerOffice);
 
-        employees.push(manager);
-        console.log(employees);
+        employeesArray.push(manager);
+        console.log(employeesArray);
 
         if (managerData.teamMember == 'Engineer') {
             return askEngineer(data);
@@ -97,8 +99,8 @@ const askManager = data => {
         const { EngineerName, EngineerId, EngineerEmail, EngineerGitHub } = engineerData;
         const engineer = new Engineer (EngineerName, EngineerId, EngineerEmail, EngineerGitHub);
 
-        employees.push(engineer);
-        console.log(employees);
+        employeesArray.push(engineer);
+        console.log(employeesArray);
 
             if (engineerData.teamMember == 'Engineer') {
                 return askEngineer(data);
@@ -148,8 +150,8 @@ const askManager = data => {
             const { internName, internId, internEmail, internSchool} = internData;
             const intern = new Intern (internName, internId, internEmail, internSchool);
 
-            employees.push(intern);
-            console.log(employees);
+            employeesArray.push(intern);
+            console.log(employeesArray);
 
             if (internData.teamMember == 'Engineer') {
                 return askEngineer(data);
@@ -161,9 +163,39 @@ const askManager = data => {
                 return internData
             }
         })  
-    }
+    };
     
+//     const createHTML = data => {
+        
+//         fs.writeFile('./dist/index.html', data, err => {
+//             if (err) {
+//                 console.log(err)
+//                 return;
+//             }
+//             else {
+//                 console.log('HTML generated')
+//             }
+//         })
+//     }
 
-askManager().then(answers => {
-    // console.log(answers)
-});
+
+// askManager()
+// .then(employeesArray=> {
+//    return generate(employeesArray);
+// })
+// .then(htm => {
+//     return createHTML(html)
+// })
+
+askManager().then(employeesArray => {
+    // console.log(answers.title)
+    const pageMarkup = generate(employeesArray);
+    fs.writeFile('./dist/index.html', pageMarkup, err => {
+          if (err) {
+          console.log(err);
+           return;
+          }
+        console.log('Page created! Check out README.md in this directory to see it!');
+    }
+    )
+})
