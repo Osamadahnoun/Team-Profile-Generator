@@ -1,15 +1,14 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const generate = require('./src/generate.js')
+const cardArrayCreator = require('./src/generate.js')
 
 const employeesArray = [];
 
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern'); 
-const console = require('console');
 
-const askManager = data => {
+const askManager = function() {
     console.log('Please build your team');
 
     return inquirer.prompt([
@@ -32,17 +31,7 @@ const askManager = data => {
             type: 'input',
             name: 'managerOffice',
             message: "What is the team manager's office number?"
-        },
-        {
-            type: 'checkbox',
-            name: 'teamMember',
-            message: "Which type of team member would you like to add?",
-            choices: ['Engineer', 'Intern', "I don't want to add any more team members"],
-            // when: ({managerOffice}) => managerOffice,
-            // // when: ({EngineerGitHub}) => EngineerGitHub,
-            // // when: ({internSchool}) => internSchool,
-        },
-       
+        },       
     ])
     .then(managerData => {
         const { managerName, managerId, managerEmail, managerOffice } = managerData;
@@ -51,151 +40,247 @@ const askManager = data => {
         employeesArray.push(manager);
         console.log(employeesArray);
 
-        if (managerData.teamMember == 'Engineer') {
-            return askEngineer(data);
-        }
-        else if (managerData.teamMember == 'Intern') {
-            return askIntern(data);
-        } 
-        else {
-            return managerData
-        }
+        // if (managerData.teamMember == 'Engineer') {
+        //     return askEngineer(employeesArray);
+        // }
+        // else if (managerData.teamMember == 'Intern') {
+        //     return askIntern(employeesArray);
+        // } 
+        // else {
+        //     return employeesArray
+        // }
     }) 
 };
 
-    const askEngineer = data => {
-        return inquirer.prompt([
+    const isEngineerOrIntern = function() {
+        return inquirer.prompt ([
+            {
+                type: 'checkbox',
+                name: 'teamMember',
+                message: "Which type of team member would you like to add?",
+                choices: ['Engineer', 'Intern']
+            },
             {
                 type: 'input',
                 name: 'EngineerName',
-                message: "What is your engineer's name?"
+                message: "What is your engineer's name?",
+                when: ({teamMember}) => teamMember == "Engineer"
             },
             {
                 type: 'input',
                 name: 'EngineerId',
-                message: "What is your engineer's ID?"
+                message: "What is your engineer's ID?",
+                when: ({teamMember}) => teamMember == "Engineer"
             },
             {
                 type: 'input',
                 name: 'EngineerEmail',
-                message: "What is your engineer's email?"
+                message: "What is your engineer's email?",
+                when: ({teamMember}) => teamMember == "Engineer"
             },
             {
                 type: 'input',
                 name: 'EngineerGitHub',
-                message: "What is your engineer's GitHub username?"
+                message: "What is your engineer's GitHub username?",
+                when: ({teamMember}) => teamMember == "Engineer"
             },
-            {
-                type: 'checkbox',
-                name: 'teamMember',
-                message: "Which type of team member would you like to add?",
-                choices: ['Engineer', 'Intern', "I don't want to add any more team members"],
-                // when: ({managerOffice}) => managerOffice,
-                // // when: ({EngineerGitHub}) => EngineerGitHub,
-                // // when: ({internSchool}) => internSchool,
-            },
-        ])
-        .then(engineerData => {
-        const { EngineerName, EngineerId, EngineerEmail, EngineerGitHub } = engineerData;
-        const engineer = new Engineer (EngineerName, EngineerId, EngineerEmail, EngineerGitHub);
-
-        employeesArray.push(engineer);
-        console.log(employeesArray);
-
-            if (engineerData.teamMember == 'Engineer') {
-                return askEngineer(data);
-            }
-            else if (engineerData.teamMember == 'Intern') {
-                return askIntern(data);
-            } 
-            else {
-                return engineerData
-            }
-        })  
-    };
-
-    const askIntern = data => {
-        return inquirer.prompt([
             {
                 type: 'input',
                 name: 'internName',
-                message: "What is your intern's name?"
+                message: "What is your intern's name?",
+                when: ({teamMember}) => teamMember == "Intern"
             },
             {
                 type: 'input',
                 name: 'internId',
-                message: "What is your intern's ID?"
+                message: "What is your intern's ID?",
+                when: ({teamMember}) => teamMember == "Intern"
             },
             {
                 type: 'input',
                 name: 'internEmail',
-                message: "What is your intern's email?"
+                message: "What is your intern's email?",
+                when: ({teamMember}) => teamMember == "Intern"
             },
             {
                 type: 'input',
                 name: 'internSchool',
-                message: "What is your intern's school?"
+                message: "What is your intern's school?",
+                when: ({teamMember}) => teamMember == "Intern"
             },
             {
-                type: 'checkbox',
-                name: 'teamMember',
-                message: "Which type of team member would you like to add?",
-                choices: ['Engineer', 'Intern', "I don't want to add any more team members"],
-                // when: ({managerOffice}) => managerOffice,
-                // // when: ({EngineerGitHub}) => EngineerGitHub,
-                // // when: ({internSchool}) => internSchool,
-            },
+                type: 'confirm',
+                name: 'confirmFinish',
+                message: 'Would you like to add anymore team members?',
+                default: true   
+            }
         ])
-        .then(internData => {
-            const { internName, internId, internEmail, internSchool} = internData;
-            const intern = new Intern (internName, internId, internEmail, internSchool);
+        .then(data => {
+            let {teamMember, EngineerName, EngineerId, EngineerEmail, EngineerGitHub, internName, internId, internEmail, internSchool, confirmFinish} = data;
+            let individual;
 
-            employeesArray.push(intern);
-            console.log(employeesArray);
-
-            if (internData.teamMember == 'Engineer') {
-                return askEngineer(data);
-            }
-            else if (internData.teamMember == 'Intern') {
-                return askIntern(data);
+            if (teamMember == "Engineer") {
+                individual = new Engineer (EngineerName, EngineerId, EngineerEmail, EngineerGitHub);
+                // console.log(individual)
             } 
-            else {
-                return internData
+            else if (teamMember == "Intern") {
+                individual = new Intern (internName, internId, internEmail, internSchool);
+                // console.log(individual);
             }
-        })  
-    };
-    
-//     const createHTML = data => {
-        
-//         fs.writeFile('./dist/index.html', data, err => {
-//             if (err) {
-//                 console.log(err)
-//                 return;
-//             }
-//             else {
-//                 console.log('HTML generated')
-//             }
-//         })
-//     }
 
+            employeesArray.push(individual);
+            
 
-// askManager()
-// .then(employeesArray=> {
-//    return generate(employeesArray);
-// })
-// .then(htm => {
-//     return createHTML(html)
-// })
+            if (confirmFinish) {
+                return isEngineerOrIntern(employeesArray);
+            }
+            else {
+                console.log(employeesArray)
+                return employeesArray;
+            }
 
-askManager().then(employeesArray => {
-    // console.log(answers.title)
-    const pageMarkup = generate(employeesArray);
-    fs.writeFile('./dist/index.html', pageMarkup, err => {
-          if (err) {
-          console.log(err);
-           return;
-          }
-        console.log('Page created! Check out README.md in this directory to see it!');
+        })
     }
-    )
-})
+
+    // const askEngineer = () => {
+    //     return inquirer.prompt([
+    //         {
+    //             type: 'input',
+    //             name: 'EngineerName',
+    //             message: "What is your engineer's name?"
+    //         },
+    //         {
+    //             type: 'input',
+    //             name: 'EngineerId',
+    //             message: "What is your engineer's ID?"
+    //         },
+            // {
+            //     type: 'input',
+            //     name: 'EngineerEmail',
+            //     message: "What is your engineer's email?"
+            // },
+            // {
+            //     type: 'input',
+            //     name: 'EngineerGitHub',
+            //     message: "What is your engineer's GitHub username?"
+            // },
+    //         {
+    //             type: 'checkbox',
+    //             name: 'teamMember',
+    //             message: "Which type of team member would you like to add?",
+    //             choices: ['Engineer', 'Intern', "I don't want to add any more team members"],
+    //             // when: ({managerOffice}) => managerOffice,
+    //             // // when: ({EngineerGitHub}) => EngineerGitHub,
+    //             // // when: ({internSchool}) => internSchool,
+    //         },
+    //     ])
+    //     .then(engineerData => {
+    //     const { EngineerName, EngineerId, EngineerEmail, EngineerGitHub } = engineerData;
+    //     const engineer = new Engineer (EngineerName, EngineerId, EngineerEmail, EngineerGitHub);
+
+    //     employeesArray.push(engineer);
+    //     console.log(employeesArray);
+
+    //         if (engineerData.teamMember == 'Engineer') {
+    //             return askEngineer(employeesArray);
+    //         }
+    //         else if (engineerData.teamMember == 'Intern') {
+    //             return askIntern(employeesArray);
+    //         } 
+    //         else {
+    //             return employeesArray
+    //         }
+    //     })  
+    // };
+
+    // const askIntern = () => {
+    //     return inquirer.prompt([
+    //         {
+    //             type: 'input',
+    //             name: 'internName',
+    //             message: "What is your intern's name?"
+    //         },
+    //         {
+    //             type: 'input',
+    //             name: 'internId',
+    //             message: "What is your intern's ID?"
+    //         },
+            // {
+            //     type: 'input',
+            //     name: 'internEmail',
+            //     message: "What is your intern's email?"
+            // },
+            // {
+            //     type: 'input',
+            //     name: 'internSchool',
+            //     message: "What is your intern's school?"
+            // },
+    //         {
+    //             type: 'checkbox',
+    //             name: 'teamMember',
+    //             message: "Which type of team member would you like to add?",
+    //             choices: ['Engineer', 'Intern', "I don't want to add any more team members"],
+    //             // when: ({managerOffice}) => managerOffice,
+    //             // // when: ({EngineerGitHub}) => EngineerGitHub,
+    //             // // when: ({internSchool}) => internSchool,
+    //         },
+    //     ])
+    //     .then(internData => {
+    //         const { internName, internId, internEmail, internSchool} = internData;
+    //         const intern = new Intern (internName, internId, internEmail, internSchool);
+
+    //         employeesArray.push(intern);
+    //         console.log(employeesArray);
+
+    //         if (internData.teamMember == 'Engineer') {
+    //             return askEngineer(employeesArray);
+    //         }
+    //         else if (internData.teamMember == 'Intern') {
+    //             return askIntern(employeesArray);
+    //         } 
+    //         else {
+    //             return employeesArray
+    //         }
+    //     })  
+    // };
+    
+// askManager().then(isEngineerOrIntern)
+// .then(employeesArray => {
+//     return cardArrayCreator(employeesArray);
+// })
+// .then(html => {
+//     // console.log(answers.title)
+//     fs.writeFile('./dist/index.html', html, err => {
+//           if (err) {
+//           console.log(err);
+//            return;
+//           }
+//         console.log('Page created! Check out README.md in this directory to see it!');
+//     }
+//     )
+// })
+
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        // if there is an error 
+        if (err) {
+            console.log(err);
+            return;
+        // when the profile has been created 
+        } else {
+            console.log("Your team profile has been successfully created! Please check out the index.html")
+        }
+    })
+}; 
+
+askManager().then(isEngineerOrIntern)
+  .then(employeesArray => {
+    return cardArrayCreator(employeesArray);
+  })
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .catch(err => {
+ console.log(err);
+  });
+

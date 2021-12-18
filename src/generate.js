@@ -67,29 +67,55 @@ const cardArrayCreator = function(data) {
     for (let i=0; i < data.length; i++) {
         const employee = data[i];
         const role = employee.getRole();
+        
 
-        if (role == 'Manager') {
+        if (role === 'Manager') {
             const managerCard = managerInfo(employee);
             cardArray.push(managerCard);
         }
-
-        if (role == 'Engineer') {
+        if (role === 'Engineer') {
             const EngineerCard = engineerInfo(employee);
             cardArray.push(EngineerCard);
         }
 
-        if (role == 'Intern') {
+        if (role === 'Intern') {
             const internCard = internInfo(employee);
             cardArray.push(internCard);
         }
+        console.log(cardArray)
+        const employeeCards = cardArray.join('')
 
 
-
-
+        const generateCards = htmlTemplate(employeeCards);
+        return generateCards;
     }
+};
+
+const htmlTemplate = function(employeeCards) {
+    return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Team Profile Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <section class="hero is-info">
+        <div class="hero-body has-text-centered">
+        <p class="title">
+            Team Profile Generator
+        </p>
+      </div>
+   </section> 
+   <section>
+    ${employeeCards}
+   </section>
+    </body>
+    </html>
+    `
 }
 
-// module.exports = {
-//     managerCard,
-//     EngineerCard
-// }
+
+
+module.exports = cardArrayCreator;
