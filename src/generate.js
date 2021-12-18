@@ -1,18 +1,18 @@
 const managerInfo = function(manager) {
     return `
-    <div class="card column is-one-third">
+    <div class="card column">
   <div class="card-content">
     <div class="media">
             <div class="media-content">
-        <p class="title is-4">${manager.managerName}</p>
+        <p class="title is-4">${manager.name}</p>
         <p class="subtitle is-6">Manager</p>
       </div>
     </div>
 
     <div class="content">
-      <div>ID: ${manager.managerId}</div>
-      <div>Email: ${manager.managerEmail}</div>
-      <div>Office Number: ${manager.managerOffice} </div>
+      <div>ID: ${manager.id}</div>
+      <div>Email: ${manager.email}</div>
+      <div>Office Number: ${manager.officeNumber} </div>
     </div>
   </div>
 </div>
@@ -21,19 +21,19 @@ const managerInfo = function(manager) {
 
 const engineerInfo = function(engineer) {
     return `
-    <div class="card column is-one-third">
+    <div class="card column">
   <div class="card-content">
     <div class="media">
             <div class="media-content">
-        <p class="title is-4">${engineer.EngineerName}</p>
-        <p class="subtitle is-6">Manager</p>
+        <p class="title is-4">${engineer.name}</p>
+        <p class="subtitle is-6">Engineer</p>
       </div>
     </div>
 
     <div class="content">
-      <div>ID: ${engineer.EngineerId}</div>
-      <div>Email: ${engineer.EngineerEmail}</div>
-      <div>GitHub: ${engineer.EngineerGitHub} </div>
+      <div>ID: ${engineer.id}</div>
+      <div>Email: ${engineer.email}</div>
+      <div>GitHub: ${engineer.github} </div>
     </div>
   </div>
 </div>
@@ -42,19 +42,19 @@ const engineerInfo = function(engineer) {
 
 const internInfo = function(intern) {
     return `
-    <div class="card column is-one-third">
+    <div class="card column">
   <div class="card-content">
     <div class="media">
             <div class="media-content">
-        <p class="title is-4">${intern.internName}</p>
-        <p class="subtitle is-6">Manager</p>
+        <p class="title is-4">${intern.name}</p>
+        <p class="subtitle is-6">Intern</p>
       </div>
     </div>
 
     <div class="content">
-      <div>ID: ${intern.internId}</div>
-      <div>Email: ${intern.internEmail}</div>
-      <div>School: ${intern.internSchool} </div>
+      <div>ID: ${intern.id}</div>
+      <div>Email: ${intern.email}</div>
+      <div>School: ${intern.school} </div>
     </div>
   </div>
 </div>
@@ -69,26 +69,26 @@ const cardArrayCreator = function(data) {
         const role = employee.getRole();
         
 
-        if (role === 'Manager') {
+        if (role == 'Manager') {
             const managerCard = managerInfo(employee);
             cardArray.push(managerCard);
         }
-        if (role === 'Engineer') {
+        if (role == 'Engineer') {
             const EngineerCard = engineerInfo(employee);
             cardArray.push(EngineerCard);
         }
-
-        if (role === 'Intern') {
+        if (role == 'Intern') {
             const internCard = internInfo(employee);
             cardArray.push(internCard);
         }
-        console.log(cardArray)
-        const employeeCards = cardArray.join('')
-
-
-        const generateCards = htmlTemplate(employeeCards);
-        return generateCards;
     }
+
+    console.log(cardArray)
+    const employeeCards = cardArray.join('')
+
+
+    const generateCards = htmlTemplate(employeeCards);
+    return generateCards;
 };
 
 const htmlTemplate = function(employeeCards) {
@@ -116,6 +116,7 @@ const htmlTemplate = function(employeeCards) {
     `
 }
 
-
-
 module.exports = cardArrayCreator;
+
+
+
