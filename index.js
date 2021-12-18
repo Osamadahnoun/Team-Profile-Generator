@@ -58,97 +58,6 @@ const askManager = function() {
         }
     }) 
 };
-
-    // const isEngineerOrIntern = function() {
-    //     return inquirer.prompt ([
-            // {
-            //     type: 'checkbox',
-            //     name: 'teamMember',
-            //     message: "Which type of team member would you like to add?",
-            //     choices: ['Engineer', 'Intern']
-            // },
-    //         {
-    //             type: 'input',
-    //             name: 'EngineerName',
-    //             message: "What is your engineer's name?",
-    //             when: ({teamMember}) => teamMember == "Engineer"
-    //         },
-    //         {
-    //             type: 'input',
-    //             name: 'EngineerId',
-    //             message: "What is your engineer's ID?",
-    //             when: ({teamMember}) => teamMember == "Engineer"
-    //         },
-    //         {
-    //             type: 'input',
-    //             name: 'EngineerEmail',
-    //             message: "What is your engineer's email?",
-    //             when: ({teamMember}) => teamMember == "Engineer"
-    //         },
-    //         {
-    //             type: 'input',
-    //             name: 'EngineerGitHub',
-    //             message: "What is your engineer's GitHub username?",
-    //             when: ({teamMember}) => teamMember == "Engineer"
-    //         },
-    //         {
-    //             type: 'input',
-    //             name: 'internName',
-    //             message: "What is your intern's name?",
-    //             when: ({teamMember}) => teamMember == "Intern"
-    //         },
-    //         {
-    //             type: 'input',
-    //             name: 'internId',
-    //             message: "What is your intern's ID?",
-    //             when: ({teamMember}) => teamMember == "Intern"
-    //         },
-    //         {
-    //             type: 'input',
-    //             name: 'internEmail',
-    //             message: "What is your intern's email?",
-    //             when: ({teamMember}) => teamMember == "Intern"
-    //         },
-    //         {
-    //             type: 'input',
-    //             name: 'internSchool',
-    //             message: "What is your intern's school?",
-    //             when: ({teamMember}) => teamMember == "Intern"
-    //         },
-    //         {
-    //             type: 'confirm',
-    //             name: 'confirmFinish',
-    //             message: 'Would you like to add anymore team members?',
-    //             default: true   
-    //         }
-    //     ])
-    //     .then(data => {
-    //         let {teamMember, EngineerName, EngineerId, EngineerEmail, EngineerGitHub, internName, internId, internEmail, internSchool, confirmFinish} = data;
-    //         let individual;
-
-    //         if (teamMember == "Engineer") {
-    //             individual = new Engineer (EngineerName, EngineerId, EngineerEmail, EngineerGitHub);
-    //             // console.log(individual)
-    //         } 
-    //         else if (teamMember == "Intern") {
-    //             individual = new Intern (internName, internId, internEmail, internSchool);
-    //             // console.log(individual);
-    //         }
-
-    //         employeesArray.push(individual);
-            
-
-    //         if (confirmFinish) {
-    //             return isEngineerOrIntern(employeesArray);
-    //         }
-    //         else {
-    //             console.log(employeesArray)
-    //             return employeesArray;
-    //         }
-
-    //     })
-    // }
-
     const askEngineer = () => {
         return inquirer.prompt([
             {
@@ -176,9 +85,6 @@ const askManager = function() {
                 name: 'teamMember',
                 message: "Which type of team member would you like to add?",
                 choices: ['Engineer', 'Intern', "I don't want to add any more team members"],
-                // when: ({managerOffice}) => managerOffice,
-                // // when: ({EngineerGitHub}) => EngineerGitHub,
-                // // when: ({internSchool}) => internSchool,
             },
         ])
         .then(engineerData => {
@@ -227,9 +133,6 @@ const askManager = function() {
                 name: 'teamMember',
                 message: "Which type of team member would you like to add?",
                 choices: ['Engineer', 'Intern', "I don't want to add any more team members"],
-                // when: ({managerOffice}) => managerOffice,
-                // // when: ({EngineerGitHub}) => EngineerGitHub,
-                // // when: ({internSchool}) => internSchool,
             },
         ])
         .then(internData => {
@@ -253,13 +156,11 @@ const askManager = function() {
     
 const writeFile = data => {
     fs.writeFile('./dist/index.html', data, err => {
-                // if there is an error 
                 if (err) {
                     console.log(err);
                     return;
-                // when the profile has been created 
                 } else {
-                    console.log("Your team profile has been successfully created! Please check out the index.html")
+                    console.log("Team profile generated! Please chekc the dist directory for the html file!")
                 }
             })
 }
@@ -276,18 +177,5 @@ askManager().then(employeesArray => {
     console.log(err)
 })
 
-// askManager().then(isEngineerOrIntern).then(employeesArray => {
-//     const htmlCode = generate(employeesArray)
-//     fs.writeFile('./dist/index.html', htmlCode, err => {
-//         // if there is an error 
-//         if (err) {
-//             console.log(err);
-//             return;
-//         // when the profile has been created 
-//         } else {
-//             console.log("Your team profile has been successfully created! Please check out the index.html")
-//         }
-//     })
-// })
-  
+
 

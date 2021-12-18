@@ -1,7 +1,7 @@
 const managerInfo = function(manager) {
     return `
     <div class="card column">
-  <div class="card-content">
+  <div class="card-content is-info">
     <div class="media">
             <div class="media-content">
         <p class="title is-4">${manager.name}</p>
@@ -11,7 +11,7 @@ const managerInfo = function(manager) {
 
     <div class="content">
       <div>ID: ${manager.id}</div>
-      <div>Email: ${manager.email}</div>
+      <div>Email: <a href="mailto:${manager.email}">${manager.email}</a></div>
       <div>Office Number: ${manager.officeNumber} </div>
     </div>
   </div>
@@ -32,8 +32,8 @@ const engineerInfo = function(engineer) {
 
     <div class="content">
       <div>ID: ${engineer.id}</div>
-      <div>Email: ${engineer.email}</div>
-      <div>GitHub: ${engineer.github} </div>
+      <div>Email: <a href="mailto:${engineer.email}">${engineer.email}</a></div>
+      <div class="github"><a href="https://github.com/${engineer.github}">Githu Account</a></div>
     </div>
   </div>
 </div>
@@ -53,7 +53,7 @@ const internInfo = function(intern) {
 
     <div class="content">
       <div>ID: ${intern.id}</div>
-      <div>Email: ${intern.email}</div>
+      <div>Email: <a href="mailto:${intern.email}">${intern.email}</a></div>
       <div>School: ${intern.school} </div>
     </div>
   </div>
@@ -108,9 +108,10 @@ const htmlTemplate = function(employeeCards) {
         </p>
       </div>
    </section> 
-   <section>
+   <div class="columns">
     ${employeeCards}
-   </section>
+   </div>
+   
     </body>
     </html>
     `
