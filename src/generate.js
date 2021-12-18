@@ -10,9 +10,9 @@ const managerInfo = function(manager) {
     </div>
 
     <div class="content">
-      <div>ID: ${manager.id}</div>
-      <div>Email: <a href="mailto:${manager.email}">${manager.email}</a></div>
-      <div>Office Number: ${manager.officeNumber} </div>
+      <div class="text">ID: ${manager.id}</div>
+      <div class="text">Email: <a href="mailto:${manager.email}">${manager.email}</a></div>
+      <div class="text">Office Number: ${manager.officeNumber} </div>
     </div>
   </div>
 </div>
@@ -31,9 +31,9 @@ const engineerInfo = function(engineer) {
     </div>
 
     <div class="content">
-      <div>ID: ${engineer.id}</div>
-      <div>Email: <a href="mailto:${engineer.email}">${engineer.email}</a></div>
-      <div class="github"><a href="https://github.com/${engineer.github}">Githu Account</a></div>
+      <div class="text">ID: ${engineer.id}</div>
+      <div class="text">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></div>
+      <div class="github text"><a href="https://github.com/${engineer.github}">Github Account</a></div>
     </div>
   </div>
 </div>
@@ -52,9 +52,9 @@ const internInfo = function(intern) {
     </div>
 
     <div class="content">
-      <div>ID: ${intern.id}</div>
-      <div>Email: <a href="mailto:${intern.email}">${intern.email}</a></div>
-      <div>School: ${intern.school} </div>
+      <div class="text">ID: ${intern.id}</div>
+      <div class="text">Email: <a href="mailto:${intern.email}">${intern.email}</a></div>
+      <div class="text">School: ${intern.school} </div>
     </div>
   </div>
 </div>
