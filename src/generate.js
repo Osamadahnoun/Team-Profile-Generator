@@ -83,7 +83,6 @@ const cardArrayCreator = function(data) {
         }
     }
 
-    console.log(cardArray)
     const employeeCards = cardArray.join('')
 
 

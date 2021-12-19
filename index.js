@@ -45,7 +45,6 @@ const askManager = function() {
         const manager = new Manager (managerName, managerId, managerEmail, managerOffice);
 
         employeesArray.push(manager);
-        console.log(employeesArray);
 
         if (managerData.teamMember == 'Engineer') {
             return askEngineer(employeesArray);
@@ -92,7 +91,6 @@ const askManager = function() {
         const engineer = new Engineer (EngineerName, EngineerId, EngineerEmail, EngineerGitHub);
 
         employeesArray.push(engineer);
-        console.log(employeesArray);
 
             if (engineerData.teamMember == 'Engineer') {
                 return askEngineer(employeesArray);
@@ -140,7 +138,6 @@ const askManager = function() {
             const intern = new Intern (internName, internId, internEmail, internSchool);
 
             employeesArray.push(intern);
-            console.log(employeesArray);
 
             if (internData.teamMember == 'Engineer') {
                 return askEngineer(employeesArray);

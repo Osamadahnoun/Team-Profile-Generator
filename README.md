@@ -10,8 +10,11 @@
 * Jest
 
 ## Screenshot
+![Terminal Screenshot](./images/terminal.png)
+![HTML Screenshot](./images/htmlpage.png)
 
 ## Walkthrough Video
+[Walkthrough Video](https://watch.screencastify.com/v/Y8md5HK1odtwKAFFYR88)
 
 ## Contribution 
 
